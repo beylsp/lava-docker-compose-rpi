@@ -83,7 +83,7 @@ services:
       context: ./dispatcher
       args:
         image: ${DC_DISPATCHER_IMAGE}
-        extra_packages: "linux-image-amd64 curl"
+        extra_packages: "linux-image-arm64 curl"
     depends_on:
     - lava-dispatcher-webserver
     - lava-dispatcher-tftpd
