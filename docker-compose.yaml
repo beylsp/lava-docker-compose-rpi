@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: lavaserverdbpass
     volumes:
     - db-data:/var/lib/postgresql/data
-    restart: unless-stopped
+    restart: always
 
   lava-scheduler:
     image: ${DC_SERVER_IMAGE}
@@ -22,7 +22,7 @@ services:
     - db
     environment:
       SERVICES: "lava-scheduler"
-    restart: unless-stopped
+    restart: always
 
   lava-publisher:
     image: ${DC_SERVER_IMAGE}
@@ -35,7 +35,7 @@ services:
     ports:
     - 5500:5500
     - 8001:8001
-    restart: unless-stopped
+    restart: always
 
   lava-server:
     image: ${DC_SERVER_IMAGE}
@@ -57,7 +57,7 @@ services:
       BIND: "--bind lava-server:8000"
       LAVA_ADMIN_USERNAME: "${DC_LAVA_ADMIN_USERNAME}"
       LAVA_ADMIN_PASSWORD: "${DC_LAVA_ADMIN_PASSWORD}"
-    restart: unless-stopped
+    restart: always
 
   lava-coordinator:
     image: ${DC_SERVER_IMAGE}
@@ -65,7 +65,7 @@ services:
       SERVICES: "lava-coordinator"
     ports:
     - 3079:3079
-    restart: unless-stopped
+    restart: always
 
   apache2:
     image: ${DC_SERVER_IMAGE}
@@ -75,7 +75,7 @@ services:
       SERVICES: "apache2"
     ports:
     - 80:80
-    restart: unless-stopped
+    restart: always
 
 
 volumes:
