@@ -2,6 +2,7 @@ version: "3.4"
 services:
   db:
     image: ${DC_POSTGRES_IMAGE}
+    container_name: db
     environment:
       POSTGRES_USER: lavaserver
       POSTGRES_PASSWORD: lavaserverdbpass
@@ -11,6 +12,7 @@ services:
 
   lava-scheduler:
     image: ${DC_SERVER_IMAGE}
+    container_name: lava-scheduler
     volumes:
     - device-types:/etc/lava-server/dispatcher-config/device-types:ro
     - devices:/etc/lava-server/dispatcher-config/devices:ro
@@ -26,6 +28,7 @@ services:
 
   lava-publisher:
     image: ${DC_SERVER_IMAGE}
+    container_name: lava-publisher
     volumes:
     - ./overlays/etc/lava-server/settings.d/01-database.yaml:/etc/lava-server/settings.d/01-database.yaml:ro
     - ./overlays/etc/lava-server/settings.d/01-events.yaml:/etc/lava-server/settings.d/01-events.yaml:ro
@@ -39,6 +42,7 @@ services:
 
   lava-server:
     image: ${DC_SERVER_IMAGE}
+    container_name: lava-server
     volumes:
     - device-types:/etc/lava-server/dispatcher-config/device-types
     - devices:/etc/lava-server/dispatcher-config/devices
@@ -61,6 +65,7 @@ services:
 
   lava-coordinator:
     image: ${DC_SERVER_IMAGE}
+    container_name: lava-coordinator
     environment:
       SERVICES: "lava-coordinator"
     ports:
@@ -69,6 +74,7 @@ services:
 
   apache2:
     image: ${DC_SERVER_IMAGE}
+    container_name: apache2
     volumes:
     - ./overlays/etc/apache2/sites-available/lava-server.conf:/etc/apache2/sites-available/lava-server.conf:ro
     environment:
