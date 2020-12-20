@@ -4,12 +4,12 @@ LAVA_HOST = lmrpi.lan
 LAVA_USER = lava
 # lavacli "identity" for the above user,
 # to submit jobs, etc.
-LAVA_IDENTITY = lava-docker
-LAVA_TOKEN = NjU3MTBjYTZhMmM3MGVmZmViZjIwMWFm
+LAVA_IDENTITY = lava-server
+LAVA_TOKEN = $(shell date +%s | sha256sum | base64 | head -c 64)
 
 LAVA_SERVER_DOCKER_NAME = lava-server
 
-LAVA_BOARDS_DEFINITION ?= boards.yaml
+LAVA_BOARDS_DEFINITION ?= /opt/lava/boards.yaml
 
 all: lava-server lava-setup lava-boards
 
@@ -23,11 +23,12 @@ lava-server:
 lava-setup: lava-token lava-identity lava-boards
 
 lava-token:
-	docker-compose exec $(LAVA_SERVER_DOCKER_NAME) \
-		lava-server manage tokens add \
-			--user $(LAVA_USER) \
-			--description "lavacli token for user 'lava', to submit jobs, etc." \
-			--secret $(LAVA_TOKEN)
+	./wait-for-it.sh -h $(LAVA_HOST) -p 80 -s -t 120 -- \
+		docker-compose exec $(LAVA_SERVER_DOCKER_NAME) \
+			lava-server manage tokens add \
+				--user $(LAVA_USER) \
+				--description "lavacli token for user 'lava', to submit jobs, etc." \
+				--secret $(LAVA_TOKEN)
 
 lava-identity:
 	lavacli identities add \
@@ -38,7 +39,7 @@ lava-identity:
 	lavacli -i $(LAVA_IDENTITY) system version
 
 lava-boards:
-	python3 board-setup-helper.py \
+	python3 /opt/lava/board-setup-helper.py \
 		--boards-definition-file $(LAVA_BOARDS_DEFINITION) \
 		--lava-host $(LAVA_HOST) \
 		--lava-user $(LAVA_USER) \

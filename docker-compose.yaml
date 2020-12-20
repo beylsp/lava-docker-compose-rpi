@@ -15,8 +15,8 @@ services:
     container_name: lava-scheduler
     volumes:
     - health-checks:/etc/lava-server/dispatcher-config/health-checks:ro
-    - ./overlays/etc/lava-server/device-definitions/device-types:/etc/lava-server/dispatcher-config/device-types:ro
-    - ./overlays/etc/lava-server/device-definitions/devices:/etc/lava-server/dispatcher-config/devices:ro
+    - /opt/lava/device-types:/etc/lava-server/dispatcher-config/device-types:ro
+    - /opt/lava//devices:/etc/lava-server/dispatcher-config/devices:ro
     - ./overlays/etc/lava-server/settings.d/01-database.yaml:/etc/lava-server/settings.d/01-database.yaml:ro
     - ./overlays/etc/lava-server/settings.d/01-events.yaml:/etc/lava-server/settings.d/01-events.yaml:ro
     - ./overlays/etc/lava-server/lava-scheduler:/etc/lava-server/lava-scheduler:ro
@@ -46,8 +46,8 @@ services:
     volumes:
     - health-checks:/etc/lava-server/dispatcher-config/health-checks
     - joboutput:/var/lib/lava-server/default/media/job-output
-    - ./overlays/etc/lava-server/device-definitions/device-types:/etc/lava-server/dispatcher-config/device-types
-    - ./overlays/etc/lava-server/device-definitions/devices:/etc/lava-server/dispatcher-config/devices
+    - /opt/lava/device-types:/etc/lava-server/dispatcher-config/device-types
+    - /opt/lava/devices:/etc/lava-server/dispatcher-config/devices
     - ./overlays/etc/lava-server/settings.d/01-database.yaml:/etc/lava-server/settings.d/01-database.yaml:ro
     - ./overlays/etc/lava-server/settings.d/01-events.yaml:/etc/lava-server/settings.d/01-events.yaml:ro
     - ./overlays/etc/lava-server/settings.d/01-unsecure.yaml:/etc/lava-server/settings.d/01-unsecure.yaml:ro
