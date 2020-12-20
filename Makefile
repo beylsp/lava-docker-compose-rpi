@@ -7,17 +7,23 @@ LAVA_USER = lava
 LAVA_IDENTITY = lava-docker
 LAVA_TOKEN = NjU3MTBjYTZhMmM3MGVmZmViZjIwMWFm
 
+LAVA_SERVER_DOCKER_NAME = lava-server
+
 LAVA_BOARDS_DEFINITION ?= boards.yaml
 
 all: lava-server lava-setup lava-boards
 
 lava-server:
 	docker-compose --env-file .env up -d
+	docker-compose exec $(LAVA_SERVER_DOCKER_NAME) \
+		chown -R lavaserver:lavaserver /etc/lava-server/dispatcher-config/device-types
+	docker-compose exec $(LAVA_SERVER_DOCKER_NAME) \
+		chown -R lavaserver:lavaserver /etc/lava-server/dispatcher-config/devices
 
 lava-setup: lava-token lava-identity lava-boards
 
 lava-token:
-	docker-compose exec lava-server \
+	docker-compose exec $(LAVA_SERVER_DOCKER_NAME) \
 		lava-server manage tokens add \
 			--user $(LAVA_USER) \
 			--description "lavacli token for user 'lava', to submit jobs, etc." \
