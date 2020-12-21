@@ -5,7 +5,7 @@ LAVA_USER = lava
 # lavacli "identity" for the above user,
 # to submit jobs, etc.
 LAVA_IDENTITY = lava-server
-LAVA_TOKEN = $(shell date +%s | sha256sum | base64 | head -c 64)
+LAVA_TOKEN := $(shell date +%s | sha256sum | base64 | head -c 64)
 
 LAVA_SERVER_DOCKER_NAME = lava-server
 
