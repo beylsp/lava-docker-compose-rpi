@@ -25,7 +25,7 @@ def Run(args, **kwargs):
 
 
 def lava_ready(host):
-    r = requests.get("http://%s/api/v0.2/system" % host)
+    r = requests.get("http://%s/api/v0.2/system/version" % host)
     try:
         r.json()
         return True
