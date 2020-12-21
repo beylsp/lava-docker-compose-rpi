@@ -23,7 +23,7 @@ lava-server:
 lava-setup: lava-token lava-identity lava-boards
 
 lava-token:
-	./wait-for-it.sh -h $(LAVA_HOST) -p 80 -s -t 120 -- \
+	python3 wait-for-lava-ready.py -H $(LAVA_HOST) -s -t 120 -- \
 		docker-compose exec $(LAVA_SERVER_DOCKER_NAME) \
 			lava-server manage tokens add \
 				--user $(LAVA_USER) \
