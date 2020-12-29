@@ -3,6 +3,7 @@ import argparse
 import datetime as dt
 import json
 import subprocess
+import socket
 import sys
 
 import requests
@@ -25,11 +26,11 @@ def Run(args, **kwargs):
 
 
 def lava_ready(host):
-    r = requests.get("http://%s/api/v0.2/system/version" % host)
     try:
+        r = requests.get("http://%s/api/v0.2/system/version" % host)
         r.json()
         return True
-    except ValueError:
+    except (socket.gaierror, ValueError):
         return False
 
 
