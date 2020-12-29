@@ -11,7 +11,7 @@ LAVA_SERVER_DOCKER_NAME = lava-server
 
 LAVA_BOARDS_DEFINITION ?= /opt/lava/boards.yaml
 
-all: lava-server lava-setup lava-boards
+all: lava-server lava-setup
 
 lava-server:
 	docker-compose --env-file .env up -d
