@@ -3,7 +3,6 @@ import argparse
 import datetime as dt
 import json
 import subprocess
-import socket
 import sys
 
 import requests
@@ -30,7 +29,7 @@ def lava_ready(host):
         r = requests.get("http://%s/api/v0.2/system/version" % host)
         r.json()
         return True
-    except (socket.gaierror, ValueError):
+    except (requests.exceptions.ConnectionError, ValueError):
         return False
 
 
