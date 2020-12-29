@@ -43,7 +43,8 @@ lava-boards:
 		--boards-definition-file $(LAVA_BOARDS_DEFINITION) \
 		--lava-host $(LAVA_HOST) \
 		--lava-user $(LAVA_USER) \
-		--lava-token $(LAVA_TOKEN)
+		--lava-token $(LAVA_TOKEN) \
+		--retries 10
 
 clean:
 	docker-compose rm -vsf
