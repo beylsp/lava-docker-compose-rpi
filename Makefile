@@ -43,8 +43,10 @@ lava-boards:
 		--boards-definition-file $(LAVA_BOARDS_DEFINITION) \
 		--lava-host $(LAVA_HOST) \
 		--lava-user $(LAVA_USER) \
-		--lava-token $(LAVA_TOKEN) \
-		--retries 10
+		--lava-token $(shell lavacli identities show $(LAVA_IDENTITY) | grep token | cut -d' ' -f2) \
+		--retries 10 \
+		--worker-timeout 120 \
+		--strict
 
 clean:
 	docker-compose rm -vsf
